@@ -1,0 +1,62 @@
+[
+    {
+        "id_equipo": 1,
+        "id_cliente": 1,
+        "tipo_equipo": "notebook",
+        "marca": "Lenovo",
+        "modelo": "ThinkPad X1 Carbon",
+        "nro_serie": "PF2X5ABC",
+        "observaciones": "Pantalla rota, necesita reemplazo",
+        "fecha_ingreso": "2025-11-01"
+    },
+    {
+        "id_equipo": 2,
+        "id_cliente": 1,
+        "tipo_equipo": "impresora",
+        "marca": "HP",
+        "modelo": "LaserJet Pro M404n",
+        "nro_serie": "VNC9K12345",
+        "observaciones": "No imprime, error de tóner",
+        "fecha_ingreso": "2025-11-05"
+    },
+    {
+        "id_equipo": 3,
+        "id_cliente": 2,
+        "tipo_equipo": "PC",
+        "marca": "Dell",
+        "modelo": "OptiPlex 7090",
+        "nro_serie": "5CG8452X",
+        "observaciones": "No enciende, posible problema de fuente",
+        "fecha_ingreso": "2025-11-08"
+    },
+    {
+        "id_equipo": 4,
+        "id_cliente": 3,
+        "tipo_equipo": "celular",
+        "marca": "Samsung",
+        "modelo": "Galaxy S21",
+        "nro_serie": "IMEI: 352811234567890",
+        "observaciones": "Batería se agota rápidamente",
+        "fecha_ingreso": "2025-11-10"
+    },
+    {
+        "id_equipo": 5,
+        "id_cliente": 2,
+        "tipo_equipo": "notebook",
+        "marca": "Apple",
+        "modelo": "MacBook Air M2",
+        "nro_serie": "C02ABC123DEF",
+        "observaciones": "Teclado con teclas que no responden",
+        "fecha_ingreso": "2025-11-11"
+    },
+    {
+        "id_equipo": 6,
+        "id_cliente": 4,
+        "tipo_equipo": "tablet",
+        "marca": "Samsung",
+        "modelo": "Galaxy Tab S8",
+        "nro_serie": "RF8M50X1YZA",
+        "observaciones": "Pantalla táctil no responde en la esquina superior",
+        "fecha_ingreso": "2025-11-11"
+    }
+]

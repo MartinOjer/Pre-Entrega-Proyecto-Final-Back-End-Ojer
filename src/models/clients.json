@@ -1,0 +1,102 @@
+[
+    {
+        "id_cliente": 1,
+        "nombre": "María González",
+        "dni_cuit": "27-35678912-4",
+        "telefono": "11-4567-8901",
+        "email": "maria.gonzalez@email.com",
+        "direccion": "Av. Corrientes 1234, CABA",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-01-15"
+    },
+    {
+        "id_cliente": 2,
+        "nombre": "TechSolutions SA",
+        "dni_cuit": "30-71234567-8",
+        "telefono": "11-5234-7890",
+        "email": "contacto@techsolutions.com.ar",
+        "direccion": "Av. Santa Fe 2345, CABA",
+        "tipo_cliente": "empresa",
+        "fecha_registro": "2024-11-20"
+    },
+    {
+        "id_cliente": 3,
+        "nombre": "Carlos Rodríguez",
+        "dni_cuit": "20-28456789-3",
+        "telefono": "11-6789-4567",
+        "email": "carlos.rodriguez@gmail.com",
+        "direccion": "Calle Falsa 123, Lanús",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-02-10"
+    },
+    {
+        "id_cliente": 4,
+        "nombre": "Ana Martínez",
+        "dni_cuit": "27-32145678-9",
+        "telefono": "11-3456-1234",
+        "email": "ana.martinez@hotmail.com",
+        "direccion": "Av. Rivadavia 5678, CABA",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-03-05"
+    },
+    {
+        "id_cliente": 5,
+        "nombre": "Distribuidora El Progreso SRL",
+        "dni_cuit": "30-65432109-2",
+        "telefono": "11-4321-9876",
+        "email": "admin@elprogreso.com.ar",
+        "direccion": "Av. Juan B. Justo 3456, CABA",
+        "tipo_cliente": "empresa",
+        "fecha_registro": "2024-10-15"
+    },
+    {
+        "id_cliente": 6,
+        "nombre": "Jorge López",
+        "dni_cuit": "20-31876543-5",
+        "telefono": "11-7654-3210",
+        "email": "jorge.lopez@yahoo.com",
+        "direccion": "Av. Belgrano 789, Quilmes",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-01-25"
+    },
+    {
+        "id_cliente": 7,
+        "nombre": "Laura Fernández",
+        "dni_cuit": "27-29876543-1",
+        "telefono": "11-8765-4321",
+        "email": "laura.fernandez@outlook.com",
+        "direccion": "Calle 25 de Mayo 456, San Isidro",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-02-28"
+    },
+    {
+        "id_cliente": 8,
+        "nombre": "Comercial Los Andes SA",
+        "dni_cuit": "30-78901234-6",
+        "telefono": "11-2345-6789",
+        "email": "ventas@losandes.com.ar",
+        "direccion": "Av. Cabildo 1234, CABA",
+        "tipo_cliente": "empresa",
+        "fecha_registro": "2024-09-10"
+    },
+    {
+        "id_cliente": 9,
+        "nombre": "Roberto Sánchez",
+        "dni_cuit": "20-25678901-8",
+        "telefono": "11-9012-3456",
+        "email": "roberto.sanchez@gmail.com",
+        "direccion": "Av. del Libertador 2345, Vicente López",
+        "tipo_cliente": "particular",
+        "fecha_registro": "2025-03-12"
+    },
+    {
+        "id_cliente": 10,
+        "nombre": "Consultora Integral SRL",
+        "dni_cuit": "30-82345678-9",
+        "telefono": "11-6543-2109",
+        "email": "info@consultoraintegral.com",
+        "direccion": "Av. Córdoba 4567, CABA",
+        "tipo_cliente": "empresa",
+        "fecha_registro": "2024-12-05"
+    }
+]
