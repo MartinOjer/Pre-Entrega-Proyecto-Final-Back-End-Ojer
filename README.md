@@ -117,7 +117,7 @@ JWT_secret=tu-secreto-jwt-seguro-y-largo
 npm run dev
 ```
 
-El servidor estará disponible en `http://localhost:3001`
+El servidor estará disponible en `http://localhost:3000`
 
 ## ⚙️ Configuración
 
