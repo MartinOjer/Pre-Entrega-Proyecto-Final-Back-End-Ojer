@@ -156,8 +156,8 @@ POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-  "usuario": "juan_perez",
-  "password": "micontraseña123"
+  "usuario": "MAOK",
+  "password": "123456"
 }
 ```
 
@@ -167,11 +167,11 @@ Content-Type: application/json
   "message": "Login exitoso",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "usuario": {
-    "id_usuario": 1,
-    "nombre": "Juan Pérez",
-    "email": "juan@example.com",
-    "usuario": "juan_perez",
-    "rol": "recepcionista"
+    "id_usuario": 3,
+    "nombre": "Martin Alejandro Ojer",
+    "email": "maojer1@gmail.com",
+    "usuario": "MAOK",
+    "rol": "admin"
   }
 }
 ```
@@ -602,13 +602,6 @@ Content-Type: application/json
 - **admin**: Acceso completo a todos los endpoints
 - **tecnico**: Acceso para gestionar órdenes y equipos
 - **recepcionista**: Acceso para gestionar clientes y órdenes
-
----
-
-## 📚 Documentación Adicional
-
-- [API_EXAMPLES.md](./API_EXAMPLES.md) - Ejemplos completos de todas las peticiones
-- [GUÍA DE MIGRACIÓN.md](./GUÍA DE MIGRACIÓN.md) - Guía de migración de Products a Equipments
 
 ---
 
