@@ -4,7 +4,7 @@
 
 import { Router } from 'express';
 import * as controller from '../controllers/equipments.controller.js';
-import { auth } from "../middleware/auth.middleware.js";
+import { auth, requireTecnico, requireAdmin } from "../middleware/auth.middleware.js";
 
 // Creamos una instancia del enrutador de Express
 const router = Router();
@@ -19,37 +19,37 @@ const router = Router();
 
 // Obtener todos los equipos
 // GET /api/equipments
-router.get('/', controller.getAllEquipments);
+router.get('/', auth, controller.getAllEquipments);
 
 // Buscar equipos por query (tipo_equipo, marca, modelo, nro_serie)
 // Ejemplo: GET /api/equipments/search?query=notebook
-router.get('/search', controller.searchEquipment);
+router.get('/search', auth, controller.searchEquipment);
 
 // Obtener equipos de un cliente específico
 // Ejemplo: GET /api/equipments/client/5
-router.get('/client/:id_cliente', controller.getEquipmentsByClient);
+router.get('/client/:id_cliente', auth, controller.getEquipmentsByClient);
 
 // Obtener un equipo por su ID
 // Ejemplo: GET /api/equipments/abc123
-router.get('/:id', controller.getEquipmentById);
+router.get('/:id', auth, controller.getEquipmentById);
 
 /// Rutas POST ///
 
 // Crear un nuevo equipo (requiere autenticación)
 // POST /api/equipments
-router.post('/', auth, controller.createEquipment);
+router.post('/', auth, requireTecnico, controller.createEquipment);
 
 /// Rutas PUT ///
 
 // Actualizar un equipo existente (requiere autenticación)
 // PUT /api/equipments/abc123
-router.put('/:id', auth, controller.updateEquipment);
+router.put('/:id', auth, requireTecnico, controller.updateEquipment);
 
 /// Rutas DELETE ///
 
 // Eliminar un equipo (requiere autenticación)
 // DELETE /api/equipments/abc123
-router.delete('/:id', auth, controller.deleteEquipment);
+router.delete('/:id', auth, requireAdmin, controller.deleteEquipment);
 
 // ================================
 
