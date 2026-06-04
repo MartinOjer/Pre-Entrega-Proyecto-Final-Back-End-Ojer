@@ -11,6 +11,8 @@ API REST completa desarrollada con Node.js, Express y Firebase Firestore para la
 - [Configuración](#configuración)
 - [Uso](#uso)
 - [Endpoints](#endpoints)
+- [Autenticación](#autenticación)
+- [Roles y Permisos](#roles-y-permisos)
 - [Modelos de Datos](#modelos-de-datos)
 
 ## ✨ Características
@@ -21,7 +23,8 @@ API REST completa desarrollada con Node.js, Express y Firebase Firestore para la
 - ✅ **Órdenes de Reparación**: Control completo del ciclo de reparación
 - ✅ **Gestión de Repuestos**: Inventario con proveedores
 - ✅ **Gestión de Proveedores**: Información completa de proveedores
-- ✅ **Autenticación JWT**: Token-based con roles
+- ✅ **Autenticación JWT**: Token-based con roles y permisos
+- ✅ **Contraseñas Hasheadas**: Bcrypt para seguridad
 - ✅ **Base de datos NoSQL**: Firebase Firestore con IDs numéricos auto-incrementales
 - ✅ **Validación de datos**: Completa en todas las entidades
 - ✅ **Manejo de errores**: Centralizado y controlado
@@ -32,81 +35,71 @@ API REST completa desarrollada con Node.js, Express y Firebase Firestore para la
 
 - **Node.js** v18+
 - **Express** v5.1.0
-- **Firebase** v12.4.0 (Firestore)
+- **Firebase** v12.5.0 (Firestore)
 - **JWT** (jsonwebtoken) v9.0.2
+- **Bcrypt** v6.0.0 (Hash de contraseñas)
 - **dotenv** v17.2.3
 - **cors** v2.8.5
 
 ## 📁 Estructura del Proyecto
 
 ```
-proyecto-4/
-├── src/
-│   ├── controllers/          # Lógica de solicitudes HTTP
-│   │   ├── auth.controller.js
-│   │   ├── clients.controller.js
-│   │   ├── equipments.controller.js
-│   │   ├── usuarios.controller.js
-│   │   ├── ordenes.controller.js
-│   │   ├── repuestos.controller.js
-│   │   └── proveedores.controller.js
-│   ├── models/               # Operaciones con Firestore
-│   │   ├── data.js
-│   │   ├── clients.model.js
-│   │   ├── equipments.model.js
-│   │   ├── usuarios.model.js
-│   │   ├── ordenes.model.js
-│   │   ├── repuestos.model.js
-│   │   └── proveedores.model.js
-│   ├── routes/               # Definición de rutas
-│   │   ├── auth.router.js
-│   │   ├── clients.router.js
-│   │   ├── equipments.router.js
-│   │   ├── usuarios.router.js
-│   │   ├── ordenes.router.js
-│   │   ├── repuestos.router.js
-│   │   └── proveedores.router.js
-│   ├── service/              # Validación y formateo
-│   │   ├── clients.service.js
-│   │   ├── equipments.service.js
-│   │   ├── usuarios.service.js
-│   │   ├── ordenes.service.js
-│   │   ├── repuestos.service.js
-│   │   └── proveedores.service.js
-│   └── middleware/           # Middlewares
-│       └── auth.middleware.js
-├── .env                      # Variables de entorno
-├── .gitignore
-├── index.js                  # Punto de entrada
-├── package.json
-├── README.md
-├── API_EXAMPLES.md
-├── clients.json              # Datos de ejemplo
-├── equipments.json           # Datos de ejemplo
-└── GUÍA DE MIGRACIÓN.md
+proyecto final back end/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/          # Lógica de solicitudes HTTP
+│   │   │   ├── auth.controller.js
+│   │   │   ├── clients.controller.js
+│   │   │   ├── equipments.controller.js
+│   │   │   ├── usuarios.controller.js
+│   │   │   ├── ordenes.controller.js
+│   │   │   ├── repuestos.controller.js
+│   │   │   └── proveedores.controller.js
+│   │   ├── models/               # Operaciones con Firestore
+│   │   │   ├── data.js
+│   │   │   ├── clients.model.js
+│   │   │   ├── equipments.model.js
+│   │   │   ├── usuarios.model.js
+│   │   │   ├── ordenes.model.js
+│   │   │   ├── repuestos.model.js
+│   │   │   └── proveedores.model.js
+│   │   ├── routes/               # Definición de rutas
+│   │   │   ├── auth.router.js
+│   │   │   ├── clients.router.js
+│   │   │   ├── equipments.router.js
+│   │   │   ├── usuarios.router.js
+│   │   │   ├── ordenes.router.js
+│   │   │   ├── repuestos.router.js
+│   │   │   └── proveedores.router.js
+│   │   ├── service/              # Validación y formateo
+│   │   │   ├── clients.service.js
+│   │   │   ├── equipments.service.js
+│   │   │   ├── usuarios.service.js
+│   │   │   ├── ordenes.service.js
+│   │   │   ├── repuestos.service.js
+│   │   │   └── proveedores.service.js
+│   │   ├── middleware/           # Middlewares
+│   │   │   └── auth.middleware.js
+│   │   └── index.js              # Punto de entrada
+│   ├── package.json
+│   └── .env
+│
+├── .gitignore           
+├── README.md            
+├── migrate-passwords.js 
+└── ...
 ```
 
 ## 🚀 Instalación
 
-### 1. Clonar el repositorio
-
-```bash
-git clone <url-del-repositorio>
-cd proyecto-4
-```
-
-### 2. Instalar dependencias
-
+**1. Instala las dependencias:**
 ```bash
 npm install
 ```
 
-### 3. Configurar variables de entorno
-
-Crear archivo `.env` en la raíz del proyecto:
-
+**2. Crea el archivo `.env`:**
 ```env
-PORT=3000
+PORT=3001
 NODE_ENV=development
 
 FIREBASE_apiKey=tu-api-key
@@ -116,10 +109,19 @@ FIREBASE_storageBucket=tu-proyecto.appspot.com
 FIREBASE_messagingSenderId=tu-messaging-sender-id
 FIREBASE_appId=tu-app-id
 
-JWT_secret=tu-secreto-jwt-seguro
+JWT_secret=tu-secreto-jwt-seguro-y-largo
 ```
 
-### 4. Configurar Firebase Firestore
+**3. Inicia el servidor:**
+```bash
+npm run dev
+```
+
+El servidor estará disponible en `http://localhost:3000`
+
+## ⚙️ Configuración
+
+### Firebase Firestore
 
 1. Crear un proyecto en [Firebase Console](https://console.firebase.google.com/)
 2. Habilitar Firestore Database
@@ -133,41 +135,45 @@ JWT_secret=tu-secreto-jwt-seguro
    - `counters` (para IDs auto-incrementales)
 4. Copiar las credenciales al archivo `.env`
 
-## ⚙️ Configuración
+### Script de Migración de Contraseñas
 
-### Iniciar el servidor
+Si tienes usuarios con contraseñas sin hashear, ejecuta:
 
 **Modo desarrollo (con nodemon):**
 ```bash
-npm run dev
+node migrate-passwords.js
 ```
 
-**Modo producción:**
-```bash
-npm start
-```
-
-El servidor estará disponible en `http://localhost:3000`
+Este script hasheará automáticamente todas las contraseñas sin hashear.
 
 ## 📖 Uso
 
-### 1. Autenticación
+### 1. Iniciar Sesión
 
-Para acceder a los endpoints protegidos, primero debes autenticarte:
-
+**Petición:**
 ```bash
-POST http://localhost:3000/api/auth/login
+POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "jcl@gmail.com",
-  "password": "jcl"
+  "usuario": "MAOK",
+  "password": "123456"
 }
 ```
 
-**Respuesta:**
+**Respuesta exitosa:**
 ```json
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+{
+  "message": "Login exitoso",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
+    "id_usuario": 3,
+    "nombre": "Martin Alejandro Ojer",
+    "email": "maojer1@gmail.com",
+    "usuario": "MAOK",
+    "rol": "admin"
+  }
+}
 ```
 
 ### 2. Usar el Token
@@ -175,8 +181,10 @@ Content-Type: application/json
 Para endpoints protegidos, incluye el token en el header:
 
 ```bash
-Authorization: Bearer <tu-token-jwt>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
+
+**El token tiene validez de 24 horas.**
 
 ---
 
@@ -187,89 +195,133 @@ Authorization: Bearer <tu-token-jwt>
 | Método | Endpoint | Descripción | Auth |
 |--------|----------|-------------|------|
 | POST | `/api/auth/login` | Iniciar sesión | No |
+| GET | `/api/auth/me` | Obtener usuario actual | Sí |
 
 ---
 
 ### 👥 Clientes
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/clients` | Obtener todos | No |
-| GET | `/api/clients/search?query=...` | Buscar por nombre/email/dni | No |
-| GET | `/api/clients/:id` | Obtener por ID | No |
-| POST | `/api/clients` | Crear nuevo | No |
-| PUT | `/api/clients/:id` | Actualizar | No |
-| DELETE | `/api/clients/:id` | Eliminar | No |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/clients` | Obtener todos | Sí | Todos |
+| GET | `/api/clients/search?query=...` | Buscar | Sí | Todos |
+| GET | `/api/clients/:id` | Obtener por ID | Sí | Todos |
+| POST | `/api/clients` | Crear nuevo | Sí | Recepcionista, Admin |
+| PUT | `/api/clients/:id` | Actualizar | Sí | Recepcionista, Admin |
+| DELETE | `/api/clients/:id` | Eliminar | Sí | Admin |
 
 ---
 
 ### 🖥️ Equipos
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/equipments` | Obtener todos | No |
-| GET | `/api/equipments/search?query=...` | Buscar por tipo/marca/modelo | No |
-| GET | `/api/equipments/client/:id_cliente` | Equipos por cliente | No |
-| GET | `/api/equipments/:id` | Obtener por ID | No |
-| POST | `/api/equipments` | Crear nuevo | Sí |
-| PUT | `/api/equipments/:id` | Actualizar | Sí |
-| DELETE | `/api/equipments/:id` | Eliminar | Sí |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/equipments` | Obtener todos | Sí | Todos |
+| GET | `/api/equipments/search?query=...` | Buscar | Sí | Todos |
+| GET | `/api/equipments/client/:id_cliente` | Equipos por cliente | Sí | Todos |
+| GET | `/api/equipments/:id` | Obtener por ID | Sí | Todos |
+| POST | `/api/equipments` | Crear nuevo | Sí | Técnico, Admin |
+| PUT | `/api/equipments/:id` | Actualizar | Sí | Técnico, Admin |
+| DELETE | `/api/equipments/:id` | Eliminar | Sí | Admin |
 
 ---
 
 ### 👤 Usuarios
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/usuarios` | Obtener todos | Sí |
-| GET | `/api/usuarios/search?query=...` | Buscar por nombre/email/rol | Sí |
-| GET | `/api/usuarios/:id` | Obtener por ID | Sí |
-| POST | `/api/usuarios` | Crear nuevo | Sí |
-| PUT | `/api/usuarios/:id` | Actualizar | Sí |
-| DELETE | `/api/usuarios/:id` | Eliminar | Sí |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/usuarios` | Obtener todos | Sí | Admin |
+| GET | `/api/usuarios/search?query=...` | Buscar | Sí | Admin |
+| GET | `/api/usuarios/:id` | Obtener por ID | Sí | Admin |
+| POST | `/api/usuarios` | Crear nuevo | Sí | Admin |
+| PUT | `/api/usuarios/:id` | Actualizar | Sí | Admin |
+| DELETE | `/api/usuarios/:id` | Eliminar | Sí | Admin |
 
 ---
 
 ### 📋 Órdenes
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/ordenes` | Obtener todas | Sí |
-| GET | `/api/ordenes/search?query=...` | Buscar por descripción/estado | Sí |
-| GET | `/api/ordenes/cliente/:id_cliente` | Órdenes por cliente | Sí |
-| GET | `/api/ordenes/equipo/:id_equipo` | Órdenes por equipo | Sí |
-| GET | `/api/ordenes/tecnico/:id_usuario` | Órdenes por técnico | Sí |
-| GET | `/api/ordenes/:id` | Obtener por ID | Sí |
-| POST | `/api/ordenes` | Crear nueva | Sí |
-| PUT | `/api/ordenes/:id` | Actualizar | Sí |
-| DELETE | `/api/ordenes/:id` | Eliminar | Sí |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/ordenes` | Obtener todas | Sí | Todos |
+| GET | `/api/ordenes/search?query=...` | Buscar | Sí | Todos |
+| GET | `/api/ordenes/cliente/:id_cliente` | Órdenes por cliente | Sí | Todos |
+| GET | `/api/ordenes/equipo/:id_equipo` | Órdenes por equipo | Sí | Todos |
+| GET | `/api/ordenes/tecnico/:id_usuario` | Órdenes por técnico | Sí | Todos |
+| GET | `/api/ordenes/:id` | Obtener por ID | Sí | Todos |
+| POST | `/api/ordenes` | Crear nueva | Sí | Recepcionista, Admin |
+| PUT | `/api/ordenes/:id` | Actualizar | Sí | Técnico, Admin |
+| DELETE | `/api/ordenes/:id` | Eliminar | Sí | Admin |
 
 ---
 
 ### 🔧 Repuestos
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/repuestos` | Obtener todos | Sí |
-| GET | `/api/repuestos/search?query=...` | Buscar por nombre/código | Sí |
-| GET | `/api/repuestos/proveedor/:id_proveedor` | Repuestos por proveedor | Sí |
-| GET | `/api/repuestos/:id` | Obtener por ID | Sí |
-| POST | `/api/repuestos` | Crear nuevo | Sí |
-| PUT | `/api/repuestos/:id` | Actualizar | Sí |
-| DELETE | `/api/repuestos/:id` | Eliminar | Sí |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/repuestos` | Obtener todos | Sí | Todos |
+| GET | `/api/repuestos/search?query=...` | Buscar | Sí | Todos |
+| GET | `/api/repuestos/proveedor/:id_proveedor` | Repuestos por proveedor | Sí | Todos |
+| GET | `/api/repuestos/:id` | Obtener por ID | Sí | Todos |
+| POST | `/api/repuestos` | Crear nuevo | Sí | Técnico, Admin |
+| PUT | `/api/repuestos/:id` | Actualizar | Sí | Técnico, Admin |
+| DELETE | `/api/repuestos/:id` | Eliminar | Sí | Admin |
 
 ---
 
 ### 🏢 Proveedores
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/proveedores` | Obtener todos | Sí |
-| GET | `/api/proveedores/search?query=...` | Buscar por nombre/cuit | Sí |
-| GET | `/api/proveedores/:id` | Obtener por ID | Sí |
-| POST | `/api/proveedores` | Crear nuevo | Sí |
-| PUT | `/api/proveedores/:id` | Actualizar | Sí |
-| DELETE | `/api/proveedores/:id` | Eliminar | Sí |
+| Método | Endpoint | Descripción | Auth | Roles |
+|--------|----------|-------------|------|-------|
+| GET | `/api/proveedores` | Obtener todos | Sí | Todos |
+| GET | `/api/proveedores/search?query=...` | Buscar | Sí | Todos |
+| GET | `/api/proveedores/:id` | Obtener por ID | Sí | Todos |
+| POST | `/api/proveedores` | Crear nuevo | Sí | Técnico, Admin |
+| PUT | `/api/proveedores/:id` | Actualizar | Sí | Técnico, Admin |
+| DELETE | `/api/proveedores/:id` | Eliminar | Sí | Admin |
+
+---
+
+## 🔐 Autenticación
+
+La autenticación se realiza mediante JWT (JSON Web Tokens).
+
+### Login
+
+Puedes autenticarte usando:
+- **Email**: correo@ejemplo.com
+- **Usuario**: nombre_usuario
+- **Contraseña**: contraseña
+
+El backend devuelve un token que debe incluirse en todas las peticiones protegidas.
+
+### Header de Autorización
+
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## 👥 Roles y Permisos
+
+### Admin
+- ✅ Acceso completo a todos los endpoints
+- ✅ Gestión de usuarios
+- ✅ Eliminar órdenes, equipos, repuestos y proveedores
+- ✅ Acceso a todas las funcionalidades
+
+### Técnico
+- ✅ Gestionar órdenes (actualizar estado, trabajo realizado)
+- ✅ Crear y actualizar equipos
+- ✅ Crear y actualizar repuestos y proveedores
+- ✅ Ver información de clientes
+
+### Recepcionista
+- ✅ Gestionar clientes
+- ✅ Crear órdenes
+- ✅ Ver información de equipos y órdenes
+- ✅ No puede eliminar órdenes
 
 ---
 
@@ -365,6 +417,7 @@ Authorization: Bearer <tu-token-jwt>
   "direccion": "Av. Acoyte 1234, CABA",
   "condicion_iva": "RI"
 }
+
 ```
 
 ---
@@ -477,18 +530,21 @@ Content-Type: application/json
 ## 🔒 Seguridad
 
 - ✅ JWT para autenticación
+- ✅ Bcrypt para hash de contraseñas
 - ✅ Variables de entorno para credenciales
 - ✅ Validación de datos en controllers
 - ✅ Middleware de autenticación para rutas protegidas
+- ✅ Control de roles y permisos
 - ✅ Las contraseñas nunca se devuelven en respuestas
 - ✅ `.gitignore` configurado para proteger información sensible
+- ✅ CORS configurado para orígenes permitidos
 
 ---
 
 ## 📝 Notas Importantes
 
 ### IDs Numéricos Auto-incrementales
-- Todos los IDs (id_cliente, id_equipo, id_usuario, etc.) son numéricos y auto-incrementales
+- Todos los IDs son numéricos y auto-incrementales
 - Se generan automáticamente desde una colección `counters` en Firestore
 - Comienzan en 1 y se incrementan secuencialmente
 
@@ -512,7 +568,7 @@ Content-Type: application/json
 
 ---
 
-## 🐛 Solución de Problemas
+## 🛠 Solución de Problemas
 
 ### Error de conexión a Firebase
 - Verificar credenciales en `.env`
@@ -522,11 +578,12 @@ Content-Type: application/json
 ### Error 401 Unauthorized
 - Verificar que el token JWT sea válido
 - Verificar que el header Authorization esté bien formado
-- Verificar que el token no haya expirado (1 hora de validez)
+- Verificar que el token no haya expirado (24 horas de validez)
 
 ### Error 403 Forbidden
 - El endpoint requiere autenticación y no se proporcionó token
 - El token es inválido o está expirado
+- No tienes el rol requerido para acceder a este endpoint
 
 ### Error 404 Not Found
 - Verificar que la URL sea correcta
@@ -540,7 +597,7 @@ Content-Type: application/json
 
 ---
 
-## 👥 Roles de Usuario
+## � Roles de Usuario
 
 - **admin**: Acceso completo a todos los endpoints
 - **tecnico**: Acceso para gestionar órdenes y equipos
@@ -548,16 +605,9 @@ Content-Type: application/json
 
 ---
 
-## 📚 Documentación Adicional
+## �👤 Autor
 
-- [API_EXAMPLES.md](./API_EXAMPLES.md) - Ejemplos completos de todas las peticiones
-- [GUÍA DE MIGRACIÓN.md](./GUÍA DE MIGRACIÓN.md) - Guía de migración de Products a Equipments
-
----
-
-## 👤 Autor
-
-**JCL** - Proyecto 4 - Sistema de Gestión de Taller
+**JCL** - Proyecto Sistema de Gestión de Taller
 
 ## 📄 Licencia
 
