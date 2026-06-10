@@ -42,11 +42,17 @@ const PORT = process.env.PORT || 3001;
 // Middleware CORS: Permite que aplicaciones de otros dominios 
 // accedan a nuestra API (importante para frontends en React, Vue, etc.)
 app.use(cors({
-  origin: [
-    'http://localhost:5173', // localhost
-    'https://pre-entrega-proyecto-final-back-end.vercel.app',
-    'https://pre-entrega-proyecto-final-back-end-57ieibfpx.vercel.app'  // ← esta es la que aparece en el error
-  ],
+  origin: (origin, callback) => {
+    const allowed = [
+      'http://localhost:5173',
+    ];
+    
+    if (!origin || allowed.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
