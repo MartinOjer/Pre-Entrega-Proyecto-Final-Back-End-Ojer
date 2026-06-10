@@ -42,7 +42,10 @@ const PORT = process.env.PORT || 3001;
 // Middleware CORS: Permite que aplicaciones de otros dominios 
 // accedan a nuestra API (importante para frontends en React, Vue, etc.)
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://pre-entrega-proyecto-final-back-end.vercel.app'
+  ],
   credentials: true
 }));
 
