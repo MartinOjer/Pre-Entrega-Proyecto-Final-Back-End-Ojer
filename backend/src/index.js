@@ -43,8 +43,9 @@ const PORT = process.env.PORT || 3001;
 // accedan a nuestra API (importante para frontends en React, Vue, etc.)
 app.use(cors({
   origin: [
-    'http://localhost:5173',
-    'https://pre-entrega-proyecto-final-back-end.vercel.app'
+    'http://localhost:5173', // localhost
+    'https://pre-entrega-proyecto-final-back-end.vercel.app',
+    'https://pre-entrega-proyecto-final-back-end-57ieibfpx.vercel.app'  // ← esta es la que aparece en el error
   ],
   credentials: true
 }));
