@@ -1,0 +1,9 @@
+{
+  "condicion_iva": "RI",
+  "cuit": "30-12345678-9",
+  "direccion": "Av. Gral. Paz 5000",
+  "email": "supplier@email.com",
+  "id_proveedor": 1,
+  "nombre": "Supplier Electrónicosa",
+  "telefono": "11-2222-2222"
+}

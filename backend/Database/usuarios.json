@@ -1,0 +1,11 @@
+{
+  "email": "carlos@taller.com",
+  "estado": true,
+  "fecha_alta": "2025-11-19",
+  "id_usuario": 1,
+  "nombre": "Carlosa Técnico",
+  "password": "$2b$10$ZpFmsl2wuDc2qKYhlLNi3.k1Olk/jb4yD/bbP.soBw2csjAtYKkeW",
+  "rol": "tecnico",
+  "telefono": "11-9999-8888",
+  "usuario": "carlos1_tech"
+}

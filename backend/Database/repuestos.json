@@ -1,0 +1,10 @@
+{
+  "codigo": "MON-LED-24",
+  "id_proveedor": 1,
+  "id_repuesto": 1,
+  "marca": "LG",
+  "nombre": "Monitor LED 24 pulgadas",
+  "precio_compra": 3000,
+  "precio_venta": 4500,
+  "stock": "101"
+}

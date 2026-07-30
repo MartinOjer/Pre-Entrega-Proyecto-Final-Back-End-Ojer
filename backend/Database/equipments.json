@@ -1,0 +1,10 @@
+{
+  "fecha_ingreso": "2025-11-12",
+  "id_cliente": 1,
+  "id_equipo": 1,
+  "marca": "HP",
+  "modelo": "Pavilion 15",
+  "nro_serie": "PF2X5ABC123-REP",
+  "observaciones": "Pantalla reemplazada. Equipo listo para retirar.",
+  "tipo_equipo": "notebook"
+}
