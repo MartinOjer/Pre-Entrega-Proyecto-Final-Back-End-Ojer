@@ -1,4 +1,49 @@
-import { MapPin, Phone, Mail, Clock, Wrench, Laptop, Smartphone, Printer, CheckCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Wrench, Laptop, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+
+function ServiceCard({ icon, color, title, services }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full p-6 flex items-center gap-4 hover:bg-gray-50 transition text-left"
+      >
+        <div className={`${color} w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0`}>
+          {icon}
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-bold">{title}</h3>
+          <p className="text-gray-500 text-sm mt-1">{open ? 'Cerrar lista' : 'Ver servicios y precios'}</p>
+        </div>
+        <svg
+          className={`w-5 h-5 text-gray-400 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="border-t border-gray-100">
+          {services.map((s, i) => (
+            <div
+              key={i}
+              className={`flex justify-between items-center px-6 py-3 text-sm ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+            >
+              <span className="text-gray-700">{s.nombre}</span>
+              <span className="font-semibold text-red-600">{s.precio}</span>
+            </div>
+          ))}
+          <div className="px-6 py-3 bg-yellow-50 text-xs text-yellow-700 border-t border-yellow-100">
+            * Los precios son orientativos. El costo final puede variar según el diagnóstico.
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function LandingPage() {
   return (
@@ -15,7 +60,7 @@ export default function LandingPage() {
             </div>
             <p className="text-2xl mb-4">Servicio Técnico Especializado</p>
             <p className="text-xl text-red-100 max-w-2xl mx-auto">
-              Reparación de notebooks, computadoras, impresoras y equipos electrónicos
+              Reparación de notebooks y computadoras
             </p>
             <div className="mt-8">
               <a
@@ -38,40 +83,42 @@ export default function LandingPage() {
             <p className="text-xl text-gray-600">Soluciones completas para todos tus equipos</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-              <div className="bg-red-100 w-16 h-16 rounded-lg flex items-center justify-center mb-4">
-                <Laptop className="w-8 h-8 text-red-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Notebooks</h3>
-              <p className="text-gray-600">Reparación de pantallas, teclados, baterías y más</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <ServiceCard
+              icon={<Laptop className="w-8 h-8 text-red-600" />}
+              color="bg-red-100"
+              title="Notebooks"
+              services={[
+                { nombre: 'Cambio de batería', precio: 'Consultar' },
+                { nombre: 'Reparación de pantalla', precio: 'Consultar' },
+                { nombre: 'Cambio de teclado', precio: 'Consultar' },
+                { nombre: 'Limpieza y mantenimiento', precio: 'Consultar' },
+                { nombre: 'Cambio de pasta térmica', precio: 'Consultar' },
+                { nombre: 'Formateo e instalación de SO', precio: 'Consultar' },
+                { nombre: 'Cambio de disco SSD', precio: 'Consultar' },
+                { nombre: 'Reparación de placa madre', precio: 'Consultar' },
+              ]}
+            />
 
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-              <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-4">
+            <ServiceCard
+              icon={
                 <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Computadoras</h3>
-              <p className="text-gray-600">PC de escritorio, hardware y software</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-              <div className="bg-green-100 w-16 h-16 rounded-lg flex items-center justify-center mb-4">
-                <Smartphone className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Celulares</h3>
-              <p className="text-gray-600">Pantallas, baterías y reparaciones generales</p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-              <div className="bg-purple-100 w-16 h-16 rounded-lg flex items-center justify-center mb-4">
-                <Printer className="w-8 h-8 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Impresoras</h3>
-              <p className="text-gray-600">Mantenimiento y reparación de impresoras</p>
-            </div>
+              }
+              color="bg-blue-100"
+              title="Computadoras de Escritorio"
+              services={[
+                { nombre: 'Formateo e instalación de SO', precio: 'Consultar' },
+                { nombre: 'Limpieza interna', precio: 'Consultar' },
+                { nombre: 'Cambio de pasta térmica', precio: 'Consultar' },
+                { nombre: 'Reparación de fuente de poder', precio: 'Consultar' },
+                { nombre: 'Actualización de RAM', precio: 'Consultar' },
+                { nombre: 'Cambio de disco SSD', precio: 'Consultar' },
+                { nombre: 'Reparación de placa de video', precio: 'Consultar' },
+                { nombre: 'Reparación de placa madre', precio: 'Consultar' },
+              ]}
+            />
           </div>
         </div>
       </section>
